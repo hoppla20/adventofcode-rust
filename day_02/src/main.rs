@@ -50,15 +50,15 @@ struct Game {
 }
 
 impl Game {
-    fn get_min_rule(&self) -> Result<Reach> {
-        self.reaches.iter().try_fold(
+    fn get_min_rule(&self) -> Reach {
+        self.reaches.iter().fold(
             Reach {red: 0, green: 0, blue: 0},
             |acc, reach| {
-                Ok(Reach {
+                Reach {
                     red: cmp::max(acc.red, reach.red),
                     green: cmp::max(acc.green, reach.green),
                     blue: cmp::max(acc.blue, reach.blue),
-                })
+                }
             }
         )
     }
@@ -124,7 +124,7 @@ fn main() {
             results[0] += game.id;
         }
 
-        let min_rule = game.get_min_rule()?;
+        let min_rule = game.get_min_rule();
         results[1] += min_rule.power();
 
         Ok(results)
